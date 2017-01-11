@@ -131,11 +131,17 @@ public class KafkaConsumer extends Thread {
 
         Object args = soaProcessFunction.getEmptyArgsInstance();
         Field field = args.getClass().getDeclaredFields()[0];
+
         field.setAccessible(true);//暴力访问，取消私有权限,让对象可以访问
 
-        ByteBuffer buf = ByteBuffer.wrap(message);
         try {
-            field.set(args, buf);
+            if (field.getType() == java.lang.String.class) {
+                String msg = new String(message, "utf-8");
+                field.set(args, msg);
+            } else {
+                ByteBuffer buf = ByteBuffer.wrap(message);
+                field.set(args, buf);
+            }
 
             logger.info("{}收到kafka消息，执行{}方法", ifaceClass.getName(), soaProcessFunction.getMethodName());
             soaProcessFunction.getResult(iface, args);
