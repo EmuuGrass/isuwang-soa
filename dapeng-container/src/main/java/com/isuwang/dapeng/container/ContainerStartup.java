@@ -77,7 +77,7 @@ public class ContainerStartup {
                 .filter(soaContainer -> soaContainer.getRef().equals(ApidocContainer.class.getName()))
                 .count() > 0;
 
-        if ("maven".equals(SOA_RUN_MODE) && !hasApidocContainer)
+        if ("maven".equals(SOA_RUN_MODE) && !hasApidocContainer && SoaSystemEnvProperties.SOA_APIDOC_ENABLE)
             containers.add(new ApidocContainer());
 
         try {
