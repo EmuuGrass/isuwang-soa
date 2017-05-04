@@ -1,7 +1,7 @@
 package com.isuwang.dapeng.container.socket;
 
 import com.isuwang.dapeng.container.Container;
-import com.isuwang.dapeng.container.registry.ProcessorCache;
+import com.isuwang.dapeng.core.ProcessorCache;
 import com.isuwang.dapeng.core.SoaSystemEnvProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

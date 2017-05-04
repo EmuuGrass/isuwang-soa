@@ -35,6 +35,7 @@ public class SoaSystemEnvProperties {
     private static final String KEY_SOA_MAX_READ_BUFFER_SIZE = "soa.max.read.buffer.size";
     private static final String KEY_SOA_LOCAL_HOST_NAME = "soa.local.host.name";
     private static final String KEY_SOA_TRANSACTIONAL_ENABLE = "soa.transactional.enable";
+    private static final String KEY_SOA_CALL_LOCAL_ENABLE = "soa.call.local.enable";
 
     public static final String SOA_SERVICE_IP = get(KEY_SOA_SERVICE_IP, "127.0.0.1");
     public static final boolean SOA_SERVICE_IP_ISCONFIG = get(KEY_SOA_SERVICE_IP) != null;
@@ -46,6 +47,7 @@ public class SoaSystemEnvProperties {
     public static final String SOA_ZOOKEEPER_MASTER_HOST = get(KEY_SOA_ZOOKEEPER_MASTER_HOST, null);
     public static final boolean SOA_ZOOKEEPER_MASTER_ISCONFIG = get(KEY_SOA_ZOOKEEPER_MASTER_HOST) != null;
     public static final String SOA_ZOOKEEPER_KAFKA_HOST = get(KEY_SOA_ZOOKEEPER_KAFKA_HOST, "127.0.0.1:2181");
+    public static final boolean SOA_CALL_LOCAL_ENABLE = Boolean.valueOf(get(KEY_SOA_CALL_LOCAL_ENABLE, "false"));
 
 
     public static final boolean SOA_CONTAINER_USETHREADPOOL = Boolean.valueOf(get(KEY_SOA_CONTAINER_USETHREADPOOL, Boolean.TRUE.toString()));

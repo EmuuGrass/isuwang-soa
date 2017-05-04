@@ -1,6 +1,7 @@
 package com.isuwang.dapeng.remoting.filter;
 
 import com.isuwang.dapeng.core.InvocationContext;
+import com.isuwang.dapeng.core.ProcessorCache;
 import com.isuwang.dapeng.core.SoaHeader;
 import com.isuwang.dapeng.core.SoaSystemEnvProperties;
 import com.isuwang.dapeng.core.filter.Filter;
@@ -39,6 +40,16 @@ public class LoadBalanceFilter implements Filter {
         if (isLocal) {
             usableList = new ArrayList<>();
             serviceInfos = new ServiceInfos(false, usableList);
+
+        } else if (SoaSystemEnvProperties.SOA_CALL_LOCAL_ENABLE &&
+                ProcessorCache.getMatchedProcessorsOfCurrClassLoader(soaHeader.getServiceName(), soaHeader.getVersionName(), LoadBalanceFilter.class.getClassLoader()).size() > 0) {
+
+            LOGGER.info("{} {} {} target:Local", soaHeader.getServiceName(), soaHeader.getVersionName(), soaHeader.getMethodName());
+
+            context.setCalleeIp(SoaSystemEnvProperties.SOA_CONTAINER_IP);
+            context.setCalleePort(SoaSystemEnvProperties.SOA_CONTAINER_PORT);
+            chain.doFilter();
+            return;
         } else {
             serviceInfos = RegistryAgentProxy.getCurrentInstance(RegistryAgentProxy.Type.Client).loadMatchedServices(soaHeader.getServiceName(), soaHeader.getVersionName(), true);
             usableList = serviceInfos.getServiceInfoList();

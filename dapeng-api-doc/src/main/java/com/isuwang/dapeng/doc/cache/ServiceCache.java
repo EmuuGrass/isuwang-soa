@@ -14,7 +14,6 @@ import com.isuwang.dapeng.remoting.fake.metadata.MetadataClient;
 import com.isuwang.org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.xml.bind.JAXB;
 import java.io.StringReader;
 import java.util.List;

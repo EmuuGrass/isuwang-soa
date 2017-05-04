@@ -18,8 +18,8 @@ public class TSoaServiceProtocol extends TProtocol {
     private final byte ETX = 0x03;
     private final String VERSION = "1.0.0";
 
-    private TProtocol realHeaderProtocol;
-    private TProtocol realContentProtocol;
+    private TProtocol realHeaderProtocol = new TBinaryProtocol(getTransport());
+    private TProtocol realContentProtocol = new TCompactProtocol(getTransport());
 
     private final boolean isRequestFlag;
 

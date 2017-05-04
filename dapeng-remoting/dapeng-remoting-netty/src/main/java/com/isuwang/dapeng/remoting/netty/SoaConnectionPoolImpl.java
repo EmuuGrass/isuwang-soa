@@ -1,8 +1,6 @@
 package com.isuwang.dapeng.remoting.netty;
 
-import com.isuwang.dapeng.core.InvocationContext;
-import com.isuwang.dapeng.core.SoaBaseCode;
-import com.isuwang.dapeng.core.SoaException;
+import com.isuwang.dapeng.core.*;
 import com.isuwang.dapeng.remoting.SoaConnection;
 import com.isuwang.dapeng.remoting.SoaConnectionPool;
 
@@ -30,6 +28,10 @@ public class SoaConnectionPoolImpl implements SoaConnectionPool {
 
         if (context.getCalleeIp() == null || context.getCalleePort() <= 0)
             throw new SoaException(SoaBaseCode.NotFoundServer);
+
+        if (!context.getHeader().isAsyncCall() && SoaSystemEnvProperties.SOA_CALL_LOCAL_ENABLE
+                && ProcessorCache.getMatchedProcessorsOfCurrClassLoader(context.getHeader().getServiceName(), context.getHeader().getVersionName(), SoaConnectionPoolImpl.class.getClassLoader()).size() > 0)
+            return new SoaLocalConnectionImpl();
 
         String connectKey = context.getCalleeIp() + ":" + String.valueOf(context.getCalleePort());
 
